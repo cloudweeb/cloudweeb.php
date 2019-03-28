@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+
+  vars:
+    php_web_server_enabled: false
+    php_fpm_enabled: true
+
+    php_fpm_pools:
+      - name: www
+        filename: www.conf
+        listen: /var/run/php-fpm/php-fpm.sock
+        listen_allowed_clients: '127.0.0.1'
+        env_vars: |
+          env[HOSTNAME] = $HOSTNAME
+          env[PATH] = /usr/local/bin:/usr/bin:/bin
+          env[TMP] = /tmp
+          env[TMPDIR] = /tmp
+          env[TEMP] = /tmp
+
+  roles:
+    - role: cloudweeb.php

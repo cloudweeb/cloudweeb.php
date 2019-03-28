@@ -1,0 +1,27 @@
+---
+
+- name: Include OS-specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Define PHP Packages
+  set_fact:
+    php_packages: "{{ php_base_packages + php_extra_packages }}"
+
+- name: Install PHP packages
+  yum:
+    name: "{{ php_packages }}"
+    state: present
+    enablerepo: "{{ php_repository | default(omit) }}"
+
+- name: Configure php.ini
+  template:
+    src: etc_php.ini.j2
+    dest: "{{ item }}"
+  loop: "{{ php_conf_file }}"
+  notify: restart web server
+
+- include_tasks: php-fpm.yml
+  when: php_fpm_enabled

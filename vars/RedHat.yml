@@ -1,0 +1,21 @@
+---
+
+php_web_server_daemon: httpd
+php_fpm_daemon: php-fpm
+
+php_base_packages:
+  - php
+  - php-cli
+  - php-common
+  - php-fpm
+
+php_conf_file:
+  - /etc/php.ini
+
+php_fpm_user: apache
+php_fpm_group: apache
+
+php_fpm_listen_owner: nobody
+php_fpm_listen_group: nobody
+
+php_fpm_pool_conf_path: /etc/php-fpm.d

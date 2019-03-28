@@ -1,0 +1,26 @@
+[{{ item.name }}]
+listen = {{ item.listen }}
+listen.allowed_clients = {{ item.listen_allowed_clients }}
+
+user = {{ item.user | d(php_fpm_user) }}
+group = {{ item.group | d(php_fpm_group) }}
+
+listen.owner = {{ item.listen_owner | d(php_fpm_listen_owner) }}
+listen.group = {{ item.listen_group | d(php_fpm_listen_group) }}
+
+pm = {{ item.pm | d(php_fpm_pm) }}
+pm.start_servers = {{ item.pm_start_servers | d(php_fpm_pm_start_servers) }}
+pm.min_spare_servers = {{ item.pm_min_spare_servers | d(php_fpm_pm_min_spare_servers) }}
+pm.max_spare_servers = {{ item.pm_max_spare_servers | d(php_fpm_pm_max_spare_servers) }}
+pm.max_children = {{ item.pm_max_children | d(php_fpm_pm_max_children) }}
+pm.max_requests = {{ item.pm_max_requests | d(php_fpm_pm_max_requests) }}
+pm.process_idle_timeout = {{ item.pm_process_idle_timeout | d(php_fpm_pm_process_idle_timeout) }}
+pm.status_path = /status
+
+{% if item.extra_php_ini is defined %}
+{{ item.extra_php_ini }}
+{% endif%}
+
+{% if item.env_vars is defined %}
+{{ item.env_vars }}
+{% endif%}
