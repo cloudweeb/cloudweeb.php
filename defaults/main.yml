@@ -15,6 +15,7 @@ php_ini_memory_limit: '128M'
 php_ini_date_timezone: Asia/Jakarta
 
 # PHP FPM configuration list
+php_fpm_listen: '127.0.0.1:9000'
 php_fpm_pm: dynamic                   # PHP FPM process manager (dynamic, static, ondemand)
 php_fpm_pm_max_children: '50'         # The max number of child processes to be created
 php_fpm_pm_start_servers: '5'
