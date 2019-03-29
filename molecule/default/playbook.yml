@@ -6,7 +6,7 @@
     php_web_server_enabled: false
     php_fpm_enabled: true
 
-    php_fpm_pools:
+    php_fpm_pools:                # List of php-fpm pools that will be set
       - name: www
         filename: www.conf
         listen: /var/run/php-fpm/php-fpm.sock
@@ -17,6 +17,10 @@
           env[TMP] = /tmp
           env[TMPDIR] = /tmp
           env[TEMP] = /tmp
+        extra_php_ini: |
+          php_admin_value[error_log] = /var/log/php-fpm/www-error.log
+          php_admin_flag[log_errors] = on
+          php_admin_value[memory_limit] = 128M
 
   roles:
     - role: cloudweeb.php
