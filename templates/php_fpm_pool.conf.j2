@@ -1,6 +1,6 @@
 [{{ item.name }}]
-listen = {{ item.listen }}
-listen.allowed_clients = {{ item.listen_allowed_clients }}
+listen = {{ item.listen | d(php_fpm_listen) }}
+listen.allowed_clients = {{ item.listen_allowed_clients | d('127.0.0.1') }}
 
 user = {{ item.user | d(php_fpm_user) }}
 group = {{ item.group | d(php_fpm_group) }}
