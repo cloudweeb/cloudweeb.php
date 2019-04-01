@@ -6,22 +6,22 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- name: Define PHP Packages
+- name: Define PHP version
+  set_fact:
+    php_version: "{{ __php_version }}"
+  when: php_version is not defined
+
+- name: Define PHP packages
   set_fact:
     php_packages: "{{ php_base_packages + php_extra_packages }}"
 
-- name: Install PHP packages
-  yum:
-    name: "{{ php_packages }}"
-    state: present
-    enablerepo: "{{ php_repository | default(omit) }}"
+- name: Define PHP repository
+  set_fact:
+    php_repository: remi,remi-php{{ php_version | replace('.', '') }}
+  when: php_version is defined and ansible_os_family == 'RedHat'
 
-- name: Configure php.ini
-  template:
-    src: etc_php.ini.j2
-    dest: "{{ item }}"
-  loop: "{{ php_conf_file }}"
-  notify: restart web server
+- import_tasks: repositories.yml
 
-- include_tasks: php-fpm.yml
-  when: php_fpm_enabled
+- import_tasks: install.yml
+
+- import_tasks: configure.yml

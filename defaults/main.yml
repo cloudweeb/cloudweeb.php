@@ -3,6 +3,9 @@
 php_web_server_enabled: true
 php_fpm_enabled: false
 
+php_remi_repo_enabled: true   # Enable REMI repo on RHEL OS only
+php_sury_repo_enabled: true   # Enable Sury repo on Debian OSs only
+
 php_extra_packages: []
 
 php_ini_disable_functions: ['mail', 'exec']
@@ -15,6 +18,7 @@ php_ini_memory_limit: '128M'
 php_ini_date_timezone: Asia/Jakarta
 
 # PHP FPM configuration list
+php_fpm_listen: '127.0.0.1:9000'
 php_fpm_pm: dynamic                   # PHP FPM process manager (dynamic, static, ondemand)
 php_fpm_pm_max_children: '50'         # The max number of child processes to be created
 php_fpm_pm_start_servers: '5'
