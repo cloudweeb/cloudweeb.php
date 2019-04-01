@@ -1,0 +1,31 @@
+---
+
+- name: Install Remi repository
+  yum:
+    name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: present
+  register: result
+  retries: 10
+  until: result is succeeded
+  delay: 5
+  when: ansible_os_family == 'RedHat' and php_remi_repo_enabled
+
+- block:
+    - name: Ensure gnupg is installed
+      apt:
+        name: ['gnupg', 'ca-certificates', 'apt-transport-https']
+        state: present
+
+    - name: Import Sury repo signing key
+      apt_key:
+        url: https://packages.sury.org/php/apt.gpg
+        state: present
+
+    - name: Install Sury repository
+      apt_repository:
+        repo: deb https://packages.sury.org/php/ stretch main
+        filename: sury-php
+        state: present
+        update_cache: true
+
+  when: ansible_os_family == 'Debian' and php_sury_repo_enabled

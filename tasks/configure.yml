@@ -1,0 +1,30 @@
+---
+
+- name: Ensure php conf file is exist
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop: "{{ php_conf_dir }}"
+
+- name: Configure php.ini
+  template:
+    src: etc_php.ini.j2
+    dest: "{{ item }}/php.ini"
+  loop: "{{ php_conf_dir }}"
+  notify: restart web server
+
+- name: Configure php-fpm pool
+  template:
+    src: php_fpm_pool.conf.j2
+    dest: "{{ php_fpm_pool_conf_path }}/{{ item.filename }}"
+    validate: "{{ php_fpm_bin }} -t -y %s"
+  loop: "{{ php_fpm_pools }}"
+  notify: restart php-fpm
+  when: php_fpm_enabled
+
+- name: Enable PHP-FPM service
+  service:
+    name: "{{ php_fpm_daemon }}"
+    enabled: true
+  notify: restart php-fpm
+  when: php_fpm_enabled

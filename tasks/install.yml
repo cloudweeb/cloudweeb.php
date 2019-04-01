@@ -1,0 +1,14 @@
+---
+
+- name: Install PHP packages | RedHat
+  yum:
+    name: "{{ php_packages }}"
+    state: present
+    enablerepo: "{{ php_repository | default(omit) }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: Install PHP packages | Debian
+  apt:
+    name: "{{ php_packages }}"
+    state: present
+  when: ansible_os_family == 'Debian'
