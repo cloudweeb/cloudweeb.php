@@ -15,10 +15,15 @@ def test_hosts_file(host):
 
 
 def test_service(host):
-    s = host.service('php-fpm')
+    if host.system_info.distribution == 'debian':
+        phpfpm = 'php7.2-fpm'
+    elif host.system_info.distribution == 'centos':
+        phpfpm = 'php-fpm'
+
+    s = host.service(phpfpm)
     assert s.is_enabled
     assert s.is_running
 
 
 def test_socket(host):
-    assert host.socket("unix:///var/run/php-fpm/php-fpm.sock").is_listening
+    assert host.socket("tcp://127.0.0.1:9101").is_listening

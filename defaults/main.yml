@@ -3,6 +3,9 @@
 php_web_server_enabled: true
 php_fpm_enabled: false
 
+php_remi_repo_enabled: true   # Enable REMI repo on RHEL OS only
+php_sury_repo_enabled: true   # Enable Sury repo on Debian OSs only
+
 php_extra_packages: []
 
 php_ini_disable_functions: ['mail', 'exec']

@@ -6,10 +6,12 @@
     php_web_server_enabled: false
     php_fpm_enabled: true
 
+    php_version: '7.2'
+
     php_fpm_pools:                # List of php-fpm pools that will be set
       - name: www
         filename: www.conf
-        listen: /var/run/php-fpm/php-fpm.sock
+        listen: 127.0.0.1:9101
         listen_allowed_clients: '127.0.0.1'
         env_vars: |
           env[HOSTNAME] = $HOSTNAME

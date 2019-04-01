@@ -14,8 +14,12 @@ Role Variables
 --------------
 
 ```YAML
+php_version: 7.2              # set PHP version that want to be installed, by default it is not set
 php_web_server_enabled: true  # Set true when You have web server installed on server
 php_fpm_enabled: false        # Set true when You want to enable PHP-FPM
+
+php_remi_repo_enabled: true   # Enable REMI repo on RHEL OS only
+php_sury_repo_enabled: true   # Enable Sury repo on Debian OSs only
 
 php_extra_packages: []        # List of additional PHP packages that you want to install
 
