@@ -7,6 +7,7 @@ group = {{ item.group | d(php_fpm_group) }}
 
 listen.owner = {{ item.listen_owner | d(php_fpm_listen_owner) }}
 listen.group = {{ item.listen_group | d(php_fpm_listen_group) }}
+listen.mode = 0660
 
 pm = {{ item.pm | d(php_fpm_pm) }}
 pm.start_servers = {{ item.pm_start_servers | d(php_fpm_pm_start_servers) }}
