@@ -4,9 +4,12 @@
   service:
     name: "{{ php_web_server_daemon }}"
     state: restarted
+  listen: restart web server
   when: php_web_server_enabled
 
 - name: restart php-fpm
   service:
     name: "{{ php_fpm_daemon }}"
     state: restarted
+  listen: restart web server
+  when: php_fpm_enabled

@@ -1,14 +1,21 @@
 ---
 
-- name: Install PHP packages | RedHat
+- name: (Install RedHat/CentOS) Install PHP packages
   yum:
     name: "{{ php_packages }}"
     state: present
     enablerepo: "{{ php_repository | default(omit) }}"
   when: ansible_os_family == 'RedHat'
 
-- name: Install PHP packages | Debian
+- name: (Install Debian) Install PHP packages
   apt:
     name: "{{ php_packages }}"
     state: present
   when: ansible_os_family == 'Debian'
+
+- name: Enable PHP-FPM service
+  service:
+    name: "{{ php_fpm_daemon }}"
+    state: started
+    enabled: true
+  when: php_fpm_enabled
