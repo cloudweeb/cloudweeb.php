@@ -12,10 +12,10 @@ php_base_packages:
 php_conf_dir:
   - /etc
 
-php_fpm_user: apache
-php_fpm_group: apache
+php_fpm_user: '{{ (php_web_server_daemon == "httpd") | ternary("apache", "nginx") }}'
+php_fpm_group: '{{ php_fpm_user }}'
 
-php_fpm_listen_owner: nobody
-php_fpm_listen_group: nobody
+php_fpm_listen_owner: '{{ php_fpm_user }}'
+php_fpm_listen_group: '{{ php_fpm_user }}'
 
 php_fpm_pool_conf_path: /etc/php-fpm.d
