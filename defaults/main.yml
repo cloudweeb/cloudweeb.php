@@ -27,6 +27,8 @@ php_fpm_pm_max_spare_servers: '20'
 php_fpm_pm_max_requests: '4000'       # The number of requests each child process should execute before respawning
 php_fpm_pm_process_idle_timeout: 10s  # The number of seconds after which an idle process will be killed
 
+php_fpm_pool_template: php_fpm_pool.conf.j2
+
 php_fpm_pools: []
 # - name: www
 #   filename: www.conf

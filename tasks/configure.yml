@@ -15,8 +15,8 @@
 
 - name: Configure php-fpm pool
   template:
-    src: php_fpm_pool.conf.j2
-    dest: "{{ php_fpm_pool_conf_path }}/{{ item.filename }}"
+    src: "{{ php_fpm_pool_template }}"
+    dest: "{{ php_fpm_pool_conf_path }}/{{ item.filename|d(item.name + '.conf') }}"
     validate: "{{ php_fpm_bin }} -t -y %s"
   loop: "{{ php_fpm_pools }}"
   notify: restart php-fpm
