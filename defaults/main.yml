@@ -1,5 +1,7 @@
 ---
 
+__php_version: 7.2
+
 php_web_server_enabled: true
 php_fpm_enabled: false
 
